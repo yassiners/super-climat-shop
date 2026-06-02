@@ -1,0 +1,94 @@
+# Super Climat Shop — Next.js
+
+Application e-commerce **Super Climat Shop** (SCS) migrée de PHP/MySQL vers **Next.js 14 + Supabase (PostgreSQL) + Prisma ORM**.
+
+## Stack technique
+
+| Couche | Technologie |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Base de données | Supabase PostgreSQL |
+| ORM | Prisma 5 |
+| Auth Admin | NextAuth.js v4 + bcrypt |
+| Images produits | Supabase Storage |
+| Déploiement | Vercel |
+
+## Structure
+
+```
+app/
+├── page.tsx                    # Accueil
+├── pieces-rechange/page.tsx    # Pièces de rechange
+├── chaud-froid/page.tsx        # Chaud & Froid
+├── joints-frigidaires/page.tsx # Joints frigidaires
+├── produit/[id]/page.tsx       # Détail produit
+├── contact/page.tsx            # Contact & Devis
+├── admin/
+│   ├── login/page.tsx          # Login admin (NextAuth)
+│   ├── dashboard/page.tsx      # Dashboard stats
+│   ├── produits/               # CRUD produits
+│   └── logout/route.ts         # Déconnexion
+└── api/
+    ├── auth/[...nextauth]/     # NextAuth handler
+    ├── contact/route.ts        # Formulaire contact
+    └── admin/produits/         # API CRUD produits
+```
+
+## Installation et démarrage
+
+```bash
+# 1. Installer les dépendances
+npm install
+
+# 2. Pousser le schéma sur Supabase
+npx prisma db push
+
+# 3. Insérer les données initiales
+npx prisma db seed
+
+# 4. Lancer en développement
+npm run dev
+```
+
+## Variables d'environnement
+
+Copier `.env.local` et remplir les valeurs :
+
+```env
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+NEXTAUTH_SECRET="..."
+NEXTAUTH_URL="http://localhost:3000"
+SUPABASE_URL="https://xxx.supabase.co"
+SUPABASE_SERVICE_KEY="YOUR_KEY"
+```
+
+## Compte admin par défaut (après seed)
+
+- **Identifiant** : `admin`
+- **Mot de passe** : `admin123`
+
+> ⚠️ Changer le mot de passe en production !
+
+## Déploiement Vercel
+
+```bash
+# Initialiser git et pousser
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/<username>/super-climat-shop.git
+git push -u origin main
+
+# Puis sur Vercel :
+# 1. Import repo → super-climat-shop
+# 2. Add environment variables
+# 3. Deploy
+```
+
+## Supabase Storage
+
+Créer un bucket public nommé `produits` dans Supabase Storage :
+1. Supabase Dashboard → Storage → New bucket
+2. Nom : `produits`
+3. Public : ✅ activé

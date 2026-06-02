@@ -1,0 +1,5 @@
+This file is a placeholder. Replace with the actual logo.png from:
+c:\xampp\htdocs\scs\assets\images\logo.png
+
+Run this command in PowerShell:
+Copy-Item "c:\xampp\htdocs\scs\assets\images\logo.png" "c:\xampp\htdocs\scs-next\public\images\logo.png" -Force
